@@ -12,13 +12,38 @@ export const getRandomTetrominoType = (): TetrominoType => {
   return types[Math.floor(Math.random() * types.length)];
 };
 
-export const createTetromino = (type?: TetrominoType): Tetromino => {
+export const createTetromino = (type?: TetrominoType, board?: (TetrominoType | null)[][]): Tetromino => {
   const tetrominoType = type || getRandomTetrominoType();
   const shape = TETROMINO_SHAPES[tetrominoType][0];
   const x = Math.floor((BOARD_WIDTH - shape[0].length) / 2);
+  let y = 0;
+  if (board) {
+    // ピースが収まる最上部の空きスペースを探索
+    outer: for (let testY = 0; testY <= BOARD_HEIGHT - shape.length; testY++) {
+      for (let sy = 0; sy < shape.length; sy++) {
+        for (let sx = 0; sx < shape[sy].length; sx++) {
+          if (shape[sy][sx]) {
+            const boardY = testY + sy;
+            const boardX = x + sx;
+            if (
+              boardY < 0 ||
+              boardY >= BOARD_HEIGHT ||
+              boardX < 0 ||
+              boardX >= BOARD_WIDTH ||
+              (board[boardY][boardX] !== null)
+            ) {
+              continue outer;
+            }
+          }
+        }
+      }
+      y = testY;
+      break;
+    }
+  }
   return {
     type: tetrominoType,
-    position: { x, y: 0 },
+    position: { x, y },
     rotation: 0,
   };
 };

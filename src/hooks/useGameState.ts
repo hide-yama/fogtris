@@ -20,8 +20,8 @@ import {
 
 const createInitialState = (): GameState => {
   const board = createEmptyBoard();
-  const currentPiece = createTetromino();
-  const nextPiece = createTetromino();
+  const currentPiece = createTetromino(undefined, board);
+  const nextPiece = createTetromino(undefined, board);
 
   return {
     board,
@@ -114,7 +114,7 @@ const gameReducer = (state: GameState, action: GameAction): GameState => {
       else if (linesCleared === 4) score += POINTS.TETRIS * state.level;
 
       const newCurrentPiece = state.nextPiece;
-      const newNextPiece = createTetromino();
+      const newNextPiece = createTetromino(undefined, clearedBoard);
       const isGameOver = checkCollision(clearedBoard, newCurrentPiece);
 
       if (isGameOver) {
@@ -190,7 +190,7 @@ const gameReducer = (state: GameState, action: GameAction): GameState => {
       else if (linesCleared === 4) score += POINTS.TETRIS * state.level;
 
       const newCurrentPiece = state.nextPiece;
-      const newNextPiece = createTetromino();
+      const newNextPiece = createTetromino(undefined, clearedBoard);
       const isGameOver = checkCollision(clearedBoard, newCurrentPiece);
 
       if (isGameOver) {
