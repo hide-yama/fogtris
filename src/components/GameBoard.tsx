@@ -140,7 +140,7 @@ const GameBoard: React.FC<GameBoardProps> = ({ board, currentPiece }) => {
         cancelAnimationFrame(clearAnimationRef.current);
       }
     };
-  }, [board, currentPiece, clearingLines]);
+  }, [board, currentPiece]);
 
   return (
     <div className="absolute inset-0 grid grid-rows-board bg-gray-900/90 backdrop-blur-sm rounded-lg border-2 border-gray-700/50 overflow-hidden">
