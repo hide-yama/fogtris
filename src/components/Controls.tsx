@@ -96,7 +96,10 @@ const Controls: React.FC<ControlsProps> = ({
       </button>
       <button
         className="bg-teal-700/80 hover:bg-teal-600 active:bg-teal-500 text-white p-3 rounded-lg flex justify-center items-center transition-all duration-200 backdrop-blur-sm border border-teal-500/30"
-        onClick={onRotateClockwise}
+        onPointerDown={() => handleButtonPress(onRotateClockwise, 'rotate')}
+        onPointerUp={() => handleButtonRelease(onRotateClockwise, 'rotate')}
+        onPointerLeave={() => handleButtonRelease(onRotateClockwise, 'rotate')}
+        onPointerCancel={() => handleButtonRelease(onRotateClockwise, 'rotate')}
         aria-label="Rotate"
       >
         <RotateCw size={24} />
