@@ -156,28 +156,20 @@ export const placeTetromino = (
 export const clearLines = (
   board: (TetrominoType | null)[][]
 ): { newBoard: (TetrominoType | null)[][], linesCleared: number } => {
+  // 消すべき行を除外し、上から空行を追加する方式
+  const newBoard: (TetrominoType | null)[][] = [];
   let linesCleared = 0;
-  const newBoard = board.map(row => [...row]);
-  const fullLines: number[] = [];
-
-  // 消去する行を特定
-  for (let y = BOARD_HEIGHT - 1; y >= 0; y--) {
-    if (newBoard[y].every(cell => cell !== null)) {
-      fullLines.push(y);
+  for (let y = 0; y < BOARD_HEIGHT; y++) {
+    if (board[y].every(cell => cell !== null)) {
       linesCleared++;
+    } else {
+      newBoard.push([...board[y]]);
     }
   }
-
-  // 行を消去して上の行を下に移動
-  fullLines.forEach(lineY => {
-    // 消去する行より上の行を1つずつ下に移動
-    for (let y = lineY; y > 0; y--) {
-      newBoard[y] = [...newBoard[y - 1]];
-    }
-    // 最上段に空の行を追加
-    newBoard[0] = Array(BOARD_WIDTH).fill(null);
-  });
-
+  // 上から空行を追加
+  while (newBoard.length < BOARD_HEIGHT) {
+    newBoard.unshift(Array(BOARD_WIDTH).fill(null));
+  }
   return { newBoard, linesCleared };
 };
 
