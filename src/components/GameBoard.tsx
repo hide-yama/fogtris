@@ -71,7 +71,8 @@ const GameBoard: React.FC<GameBoardProps> = ({ board, currentPiece }) => {
         boardY >= 0 &&
         boardY < BOARD_HEIGHT &&
         boardX >= 0 &&
-        boardX < BOARD_WIDTH
+        boardX < BOARD_WIDTH &&
+        renderBoard[boardY][boardX] === null
       ) {
         renderBoard[boardY][boardX] = currentPiece.type;
       }
