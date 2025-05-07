@@ -85,6 +85,7 @@ const GameBoard: React.FC<GameBoardProps> = ({ board, currentPiece }) => {
         } else {
           setClearingLines([]);
           setClearingEffect(0);
+          setDisplayBoard(board.map(row => [...row]));
         }
       };
 
